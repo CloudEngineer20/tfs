@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: guru
+  name: guru
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: guru
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: guru
+    spec:
+      containers:
+      - image: nginx
+        name: guru
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: html
+            mountPath: /usr/share/nginx/html/index.html
+            subPath: index.html
+      volumes:
+      - name: html
+        configMap:
+          name: index-html-configmap
